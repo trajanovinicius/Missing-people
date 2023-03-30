@@ -6,7 +6,7 @@ module.exports = {
     try {
       mongoose
         .connect(
-          `mongodb+srv://viniciusTrajano:${process.env.PASSWORD}@apimissingpeople.qz726eu.mongodb.net/?retryWrites=true&w=majority`,
+          `mongodb+srv://viniciustrajanobs:${process.env.PASSWORD}@apicluster.sa23shh.mongodb.net/?retryWrites=true&w=majority`,
         )
         .then(console.log('Database connected'));
     } catch (error) {
