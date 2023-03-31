@@ -1,19 +1,19 @@
 const express = require('express');
 const routes = express.Router();
-const { celebrate, Joi, Segments } = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 
 const PersonController = require('../src/controller/PersonController');
 
 routes.post(
   '/persons',
   celebrate({
-    [Segments.BODY]: {
+    body: Joi.object().keys({
       nome: Joi.string().required(),
       descricao: Joi.string().required(),
       idade: Joi.number().precision(2).required(),
       corPele: Joi.string().required(),
       sexo: Joi.string().required(),
-    },
+    }),
   }),
   PersonController.create,
 );

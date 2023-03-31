@@ -64,7 +64,6 @@ module.exports = {
         corPele,
         sexo,
       });
-
       res.status(200).json({
         message: 'Pessoa cadastrada com sucesso!',
         personCreate,
