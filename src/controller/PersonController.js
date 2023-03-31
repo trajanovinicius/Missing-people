@@ -2,6 +2,29 @@ const mongoose = require('mongoose');
 const Person = mongoose.model('Person');
 
 module.exports = {
+  async update(req, res) {
+    const id = req.params.id;
+    const { nome, descricao, idade, corPele, sexo } = req.body;
+
+    const personBody = {
+      nome,
+      descricao,
+      idade,
+      corPele,
+      sexo,
+    };
+
+    try {
+      const personUpdate = await Person.updateOne({ _id: id }, personBody);
+      if (!personUpdate) {
+        res.status(422).json({ message: 'Pessoa não encontrada no sistema!' });
+      }
+      res.status(200).json(personBody);
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
+  },
+
   async list(req, res) {
     try {
       const data = await Person.find();
