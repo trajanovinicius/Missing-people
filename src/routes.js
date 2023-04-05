@@ -1,5 +1,7 @@
 const express = require('express');
 const routes = express.Router();
+const upload = require('./config/multer');
+//const imagem = require('./models/Imagem');
 const { celebrate, Joi } = require('celebrate');
 
 const PersonController = require('../src/controller/PersonController');
@@ -17,6 +19,8 @@ routes.post(
   }),
   PersonController.create,
 );
+
+routes.post('/imagem', upload.single('file'), PersonController.upload);
 
 routes.get('/persons-list', PersonController.list);
 

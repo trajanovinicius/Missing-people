@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Imagem = require('../models/Imagem');
 const Person = mongoose.model('Person');
 
 module.exports = {
@@ -70,6 +71,23 @@ module.exports = {
       });
     } catch (error) {
       res.status(500).json({ message: 'Falha ao cadastrar essa pessoa!' });
+    }
+  },
+
+  async upload(req, res) {
+    try {
+      const { name } = req.body;
+      const file = req.file;
+
+      const imagem = new Imagem({
+        name,
+        src: file.path,
+      });
+
+      await imagem.save();
+      res.json({ imagem, message: 'Imagem Salva com sucesso' });
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao salvar a imagem!' });
     }
   },
 };
