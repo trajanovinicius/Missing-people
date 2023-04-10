@@ -1,7 +1,6 @@
 const express = require('express');
 const routes = express.Router();
 const upload = require('./config/multer');
-//const imagem = require('./models/Imagem');
 const { celebrate, Joi } = require('celebrate');
 
 const PersonController = require('../src/controller/PersonController');

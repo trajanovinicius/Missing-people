@@ -76,11 +76,11 @@ module.exports = {
 
   async upload(req, res) {
     try {
-      const { name } = req.body;
+      const { nome } = req.body;
       const file = req.file;
 
       const imagem = new Imagem({
-        name,
+        nome,
         src: file.path,
       });
 
