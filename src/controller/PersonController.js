@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Imagem = require('../models/Imagem');
+const { hash } = require('bcryptjs');
 const Person = mongoose.model('Person');
 
 module.exports = {
@@ -22,7 +23,7 @@ module.exports = {
 
   async update(req, res) {
     const id = req.params.id;
-    const { nome, descricao, idade, corPele, sexo } = req.body;
+    const { nome, descricao, idade, corPele, sexo, rg } = req.body;
 
     const personBody = {
       nome,
@@ -30,6 +31,7 @@ module.exports = {
       idade,
       corPele,
       sexo,
+      rg
     };
 
     try {
@@ -57,13 +59,17 @@ module.exports = {
 
   async create(req, res) {
     try {
-      const { nome, descricao, idade, corPele, sexo } = req.body;
+      const { nome, descricao, idade, corPele, sexo, rg } = req.body;
+     
+      const hashedRg = await hash(rg, 8);
+
       const personCreate = await Person.create({
         nome,
         descricao,
         idade,
         corPele,
         sexo,
+        rg: hashedRg
       });
       res.status(200).json({
         message: 'Pessoa cadastrada com sucesso!',

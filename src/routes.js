@@ -14,6 +14,7 @@ routes.post(
       idade: Joi.number().precision(2).required(),
       corPele: Joi.string().required(),
       sexo: Joi.string().required(),
+      rg: Joi.string().required()
     }),
   }),
   PersonController.create,
