@@ -1,0 +1,236 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "API de Cadastro e Busca de pessoas desaparecidas",
+    "description" : "Essa API tem como objeto cadastrar e buscar pessoas desaparecidas e suas informações",
+    "termOfService" : "",
+    "contact" : {
+      "email": "viniluk9@gmail.com"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [
+    {
+      "url" : "http://localhost:3333/api/v1",
+      "description" : "API de Test"
+    }
+  ],
+  "paths" : {
+    "/persons" : {
+       "post" : {
+        "summary" : "Cadastro de pessoas desaparecidas",
+        "description" : "Rota responsável pelo cadastro de pessoas desaparecidas",
+        "tags" : ["Persons"],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Person"
+              },
+              "examples" : {
+                "person" : {
+                  "value": {
+                    "nome" : "teste",
+                    "descricao" : "teste",
+                    "idade" : 0,
+                    "corPele" : "teste",
+                    "sexo" : "teste",
+                    "rg" : "teste"
+                  }  
+                }
+              }
+            }
+          }
+        },
+         "responses" : {
+           "500": {
+            "description":  "falha ao cadastrar pessoa"
+           },
+           "200" : {
+            "description" : "Pessoa cadastrada com sucesso!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Person"
+                 }
+               }
+             } 
+           }
+         }
+      }
+    },
+    "/persons-list" : {
+      "get" : {
+        "summary" : "Listagem de pessoas desaparecidas",
+        "description" : "listagem de pessoas desaparecidas cadastadas na nossa base de dados",
+        "tags" : ["Persons"],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Person-list"
+                 }
+               }
+             }
+          }
+        }
+      }
+    },
+    "/persons-update/{id}" : {
+      "patch" : {
+        "summary" : "Atualiza cadastro",
+        "description" : "Atualização de informações de pessoas que foram cadastradas pelo id",
+        "tags" : ["Persons"],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "atualização pelo id",
+            "required" : true
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Person"
+              },
+              "examples" : {
+                "person" : {
+                  "value": {
+                    "nome" : "teste",
+                    "descricao" : "teste",
+                    "idade" : 0,
+                    "corPele" : "teste",
+                    "sexo" : "teste",
+                    "rg" : "teste"
+                  }  
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "422": {
+           "description":  "Pessoa não cadastrada no sistema"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          },
+          "200" : {
+           "description" : "OK",
+           "content" : {
+             "application/json" : {
+               "schema" : {
+                 "$ref" : "#/components/schemas/Person"
+                }
+              }
+            } 
+          }
+        }
+      }
+    },
+    "/persons-delete/{id}" : {
+      "delete" : {
+        "summary": "Deletagem de pessoas cadastradas",
+        "description" : "Deletar pessoas cadastradas na base de dados",
+        "tags" : ["Persons"],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "deleção pelo id",
+            "required" : true
+          }
+        ],
+        "responses" : {
+          "200" : "Pessoa Deletada com sucesso!",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Person-delete"
+              },
+              "422" : {
+                "description" : "Pessoa já deletada do nosso Sistema!"
+              },
+              "500" : {
+                "description" : "Falha ao deletar está pessoa!"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Person" : {
+        "type": "object",
+        "properties" : {
+          "nome" : {
+            "type" : "string"
+          },
+          "descricao" : {
+            "type" : "string"
+          },
+          "idade" : {
+            "type" : "number"
+          },
+          "corPele" : {
+            "type" :"string"
+          },
+          "sexo" : {
+            "type" : "string"
+          }, 
+          "rg" : {
+            "type" : "number"
+          }
+        }
+      },
+      "Person-list" : {
+         "type" : "object",
+         "properties" : {
+           "message" : {
+            "type" : "string"
+           },
+           "personCreate" : {
+            "type": "object",
+            "properties" : {
+              "nome" : {
+            "type" : "string"
+              },
+              "descricao" : {
+                "type" : "string"
+              },
+              "idade" : {
+                "type" : "number"
+              },
+              "corPele" : {
+                "type" : "string"
+              },
+              "sexo" : {
+                "type" : "string"
+              },
+              "rg" : {
+                "type" : "string"
+              },
+              "id" : {
+                "type" : "string"
+              }
+            }
+           }
+         }
+      }, 
+      "Person-delete" : {
+        "type" :  "object",
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
